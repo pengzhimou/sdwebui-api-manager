@@ -1,8 +1,16 @@
-apt update
+
+apt install software-properties-common -y
+add-apt-repository ppa:deadsnakes/ppa -y
+apt install python3.10 -y
+apt install python3.10-venv
+
+
+
+apt update -y
 apt install -y aria2
-apt-get install python3-pip
-apt install vim
-apt-get install tmux
+apt install python3-pip -y
+apt install vim -y
+apt install tmux -y
 
 pip3 install -r requirements.txt
 
@@ -78,11 +86,10 @@ aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/emb
 aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/embed/negative/resolve/main/EasyNegativeV2.safetensors -d ./stable-diffusion-webui/embeddings -o EasyNegativeV2.safetensors
 aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/embed/negative/resolve/main/verybadimagenegative_v1.3.pt -d ./stable-diffusion-webui/embeddings -o verybadimagenegative_v1.3.pt
 aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://huggingface.co/embed/negative/resolve/main/bad-image-v2-39000.pt -d ./stable-diffusion-webui/embeddings -o bad-image-v2-39000.pt
-aria2c --console-log-level=error -c -x 16 -s 16 -k 1M https://civitai.com/api/download/models/90072?type=Model&format=SafeTensor&size=pruned&fp=fp16  -d ./stable-diffusion-webui/models/Stable-diffusion -o photon_v1.safetensors
+aria2c --console-log-level=error -c -x 16 -s 16 -k 1M "https://civitai.com/api/download/models/90072?type=Model&format=SafeTensor&size=pruned&fp=fp16"  -d ./stable-diffusion-webui/models/Stable-diffusion -o photon_v1.safetensors
 
 sed -i -e '/    api = create_api/a\' -e '    modules.script_callbacks.before_ui_callback()' ./stable-diffusion-webui/webui.py
 sed -i -e 's/\"sd_model_checkpoint\"\,/\"sd_model_checkpoint\,sd_vae\,CLIP_stop_at_last_layers\"\,/g' ./stable-diffusion-webui/modules/shared.py
 
 cd ./stable-diffusion-webui
-apt install python3.10-venv
 python3.10 -m venv venv
